@@ -22,18 +22,14 @@ class SearchPage extends Component {
     this.updateQuery(query)
     if (query.trim()) {
       const foundBooks = await BooksAPI.search(query)
-      console.log('foundBooks', foundBooks)
       if (foundBooks && !foundBooks.error) {
         const booksWithShelf = foundBooks.map(b => {
           const myBook = this.props.books.find(book => b.id === book.id)
           if (myBook) {
             b.shelf = myBook.shelf
-            console.log("HEREEE")
           }
           return b
         })
-        console.log(foundBooks)
-        console.log(booksWithShelf)
         this.setState({
           showingBooks: booksWithShelf
         })

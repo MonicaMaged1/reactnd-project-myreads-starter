@@ -19,7 +19,6 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     this.getBooks()
-    console.log(this.state.books)
   };
 
   render() {
