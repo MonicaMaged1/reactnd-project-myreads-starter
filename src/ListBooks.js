@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import Shelf from './Shelf'
 import PropTypes from 'prop-types';
 
+const shelves = {
+    currentlyReading: "Currently Reading",
+    read: "Read",
+    wantToRead: "Want To Read"
+}
+
 const ListBooks = props => {
-    const {books} = props
-    const shelves = {
-        currentlyReading: "Currently Reading",
-        read: "Read",
-        wantToRead: "Want To Read"
-    }
+    const { books } = props
+
 
     return (
         <div className="list-books">
@@ -18,7 +20,7 @@ const ListBooks = props => {
             </div>
             <div className="list-books-content">
                 <div>
-                    {Object.keys(shelves).map((shelf => (<Shelf key={shelf} title={shelves[shelf]} books={books.filter((b) => b.shelf === shelf)} />)))}
+                    {Object.keys(shelves).map((shelf => (<Shelf key={shelf} title={shelves[shelf]} books={books.filter((b) => b.shelf === shelf)} onUpdate={props.onUpdate} />)))}
                 </div>
             </div>
             <div className="open-search">
@@ -31,7 +33,7 @@ const ListBooks = props => {
 }
 
 ListBooks.propTypes = {
-    books : PropTypes.array
+    books: PropTypes.array
 }
 
 export default ListBooks

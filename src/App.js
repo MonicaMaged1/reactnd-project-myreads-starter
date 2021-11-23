@@ -25,14 +25,17 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-          <Route exact path='/' render={() => (
-            <ListBooks
-              books={this.state.books}
-            />
-          )} />
-          <Route path='/search' render={() => (
-            <SearchPage />
-          )} />
+        <Route exact path='/' render={() => 
+          <ListBooks
+            books={this.state.books}
+            onUpdate={this.update}
+          />
+        } />
+        <Route path='/search' render={() =>
+          <SearchPage
+            books={this.state.books}
+            onUpdate={this.update} />
+        } />
       </div>
     )
   }
@@ -43,6 +46,26 @@ class BooksApp extends React.Component {
       books
     }))
     console.log(books)
+  }
+
+  update = async (book, shelf) => {
+    await BooksAPI.update(book, shelf)
+    const isBookFound = this.state.books.find((b) => b.id === book.id)
+    if (isBookFound) {
+      this.setState({
+        books: this.state.books.map((b) => {
+          if (b.id === book.id) {
+            b.shelf = shelf
+          }
+          return b;
+        })
+      })
+    }
+    else {
+      this.setState({
+        books: [...this.state.books, { ...book, shelf }]
+      })
+    }
   }
 }
 
