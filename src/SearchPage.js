@@ -10,7 +10,7 @@ class SearchPage extends Component {
   }
   updateQuery = (query) => {
     this.setState(() => ({
-      query: query.trim()
+      query: query
     }))
   }
   clearQuery = () => {
@@ -20,7 +20,7 @@ class SearchPage extends Component {
   search = async (query) => {
     console.log('query', query)
     this.updateQuery(query)
-    if (query.trim()) {
+    if (query) {
       const foundBooks = await BooksAPI.search(query)
       if (foundBooks && !foundBooks.error) {
         const booksWithShelf = foundBooks.map(b => {
